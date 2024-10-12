@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SdkService } from 'src/app/services/sdk.service';
 import { TokenService } from 'src/app/services/token.service';
 
 @Component({
@@ -10,10 +11,11 @@ import { TokenService } from 'src/app/services/token.service';
 export class RegisterFormComponent implements OnInit {
   registerForm!: FormGroup;
   token: string = '';
+  registrationSuccess: boolean = false;  // Para mostrar mensaje de éxito
 
   constructor(
     private fb: FormBuilder, 
-    // private tokenService: TokenService
+    // private sdkService: SdkService
   ) {}
 
   ngOnInit(): void {
@@ -28,23 +30,32 @@ export class RegisterFormComponent implements OnInit {
       ], // Campo para el token
     });
 
-    // // Obtener el token al cargar el formulario
-    // this.tokenService.getToken().subscribe({
+    // // Obtener el token al cargar el formulario usando el SDK
+    // this.sdkService.getToken().subscribe({
     //   next: (token: string) => {
-    //     this.token = token; // Almacenar el token
-    //     this.registerForm.get('token')?.setValue(this.token); // Asignar el token al campo del formulario
+    //     this.token = token;  // Almacenar el token
+    //     this.registerForm.get('token')?.setValue(this.token);  // Asignar el token al campo del formulario
     //   },
     //   error: (error) => {
     //     console.error('Error obteniendo el token', error);
-    //   },
+    //   }
     // });
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
-      console.log('Form Data: ', formData);
-      // Lógica para enviar datos al backend
+
+      // // Usar el SDK para registrar al cliente
+      // this.sdkService.registerClient(formData).subscribe({
+      //   next: (response) => {
+      //     console.log('Registro exitoso:', response);
+      //     this.registrationSuccess = true;  // Mostrar mensaje de éxito
+      //   },
+      //   error: (error) => {
+      //     console.error('Error al registrar el cliente:', error);
+      //   }
+      // });
     }
   }
 
