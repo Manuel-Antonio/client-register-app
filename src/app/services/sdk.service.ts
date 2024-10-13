@@ -12,8 +12,8 @@ export interface ClientRegisterData {
   providedIn: 'root',
 })
 export class SdkService {
-  private securityApiUrl = 'http://localhost:3000/generate-token'; // URL del microservicio de seguridad
-  private clientApiUrl = 'http://localhost:3001/register-client'; // URL del microservicio de clientes
+  private securityApiUrl = 'http://localhost:3000/token'; // URL del microservicio de seguridad
+  private clientApiUrl = 'http://localhost:3001/clients'; // URL del microservicio de clientes
 
   constructor(private http: HttpClient) {}
 

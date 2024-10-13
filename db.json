@@ -1,0 +1,14 @@
+{
+  "token": {
+    "value": "12345678"
+  },
+  "clients": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "secret",
+      "token": "12345678"
+    }
+  ]
+}

@@ -3,45 +3,129 @@
     <h2 class="text-2xl font-bold text-center mb-6">Registro de Clientes</h2>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      
       <!-- Nombre -->
       <div>
         <label for="name" class="block text-gray-700">Nombre</label>
-        <input id="name" formControlName="name" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tu nombre" />
-        <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="text-red-500 text-sm">El nombre es requerido y debe tener al menos 3 caracteres.</div>
+        <input
+          id="name"
+          formControlName="name"
+          type="text"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Ingresa tu nombre"
+        />
+        <div
+          *ngIf="
+            registerForm.get('name')?.invalid &&
+            registerForm.get('name')?.touched
+          "
+          class="text-red-500 text-sm"
+        >
+          El nombre es requerido y debe tener al menos 3 caracteres.
+        </div>
       </div>
 
       <!-- Email -->
       <div>
-        <label for="email" class="block text-gray-700">Correo Electrónico</label>
-        <input id="email" formControlName="email" type="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tu correo" />
-        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-sm">Ingresa un correo electrónico válido.</div>
+        <label for="email" class="block text-gray-700"
+          >Correo Electrónico</label
+        >
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Ingresa tu correo"
+        />
+        <div
+          *ngIf="
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.touched
+          "
+          class="text-red-500 text-sm"
+        >
+          Ingresa un correo electrónico válido.
+        </div>
       </div>
 
       <!-- Token -->
       <div>
-        <label for="token" class="block text-gray-700">Token de Seguridad</label>
-        <input id="token" formControlName="token" type="text" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Token de 8 dígitos" />
-        <div *ngIf="registerForm.get('token')?.invalid && registerForm.get('token')?.touched" class="text-red-500 text-sm">El token debe tener 8 dígitos.</div>
+        <label for="token" class="block text-gray-700"
+          >Token de Seguridad</label
+        >
+        <input
+          id="token"
+          formControlName="token"
+          type="text"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Token de 8 dígitos"
+        />
+        <div
+          *ngIf="
+            registerForm.get('token')?.invalid &&
+            registerForm.get('token')?.touched
+          "
+          class="text-red-500 text-sm"
+        >
+          El token debe tener 8 dígitos.
+        </div>
       </div>
 
       <!-- Contraseña -->
       <div>
         <label for="password" class="block text-gray-700">Contraseña</label>
-        <input id="password" formControlName="password" type="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Crea una contraseña" />
-        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-sm">La contraseña debe tener al menos 6 caracteres.</div>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Crea una contraseña"
+        />
+        <div
+          *ngIf="
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.touched
+          "
+          class="text-red-500 text-sm"
+        >
+          La contraseña debe tener al menos 6 caracteres.
+        </div>
       </div>
 
       <!-- Confirmar Contraseña -->
       <div>
-        <label for="confirmPassword" class="block text-gray-700">Confirmar Contraseña</label>
-        <input id="confirmPassword" formControlName="confirmPassword" type="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Repite tu contraseña" />
-        <div *ngIf="!passwordsMatch && registerForm.get('confirmPassword')?.touched" class="text-red-500 text-sm">Las contraseñas no coinciden.</div>
+        <label for="confirmPassword" class="block text-gray-700"
+          >Confirmar Contraseña</label
+        >
+        <input
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          type="password"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Repite tu contraseña"
+        />
+        <div
+          *ngIf="
+            !passwordsMatch && registerForm.get('confirmPassword')?.touched
+          "
+          class="text-red-500 text-sm"
+        >
+          Las contraseñas no coinciden.
+        </div>
       </div>
 
       <!-- Botón de Enviar -->
       <div>
-        <button type="submit" [disabled]="!registerForm.valid || !passwordsMatch" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Registrar</button>
+        <button
+          type="submit"
+          [disabled]="!registerForm.valid || !passwordsMatch"
+          class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Registrar
+        </button>
+      </div>
+      <!-- Mensaje de éxito -->
+      <div *ngIf="registrationSuccess" class="text-green-500 text-center mt-4">
+        ¡Registro exitoso!
       </div>
     </form>
   </div>
