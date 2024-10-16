@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SdkService } from 'src/app/services/sdk.service';
-import { TokenService } from 'src/app/services/token.service';
+import { CustomerService } from 'src/app/services/customer.service';
+import { SecurityService } from 'src/app/services/security.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-form',
@@ -10,12 +12,17 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class RegisterFormComponent implements OnInit {
   registerForm!: FormGroup;
-  token: string = '';
-  registrationSuccess: boolean = false;  // Para mostrar mensaje de éxito
+  message!: string;
+  showToast = false;
+  toastMessage = '';
+  toastType: 'success' | 'warning' | 'danger' = 'success';
 
   constructor(
-    private fb: FormBuilder, 
-    // private sdkService: SdkService
+    private fb: FormBuilder,
+    private securityService: SecurityService,
+    private customerService: CustomerService,
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,39 +34,36 @@ export class RegisterFormComponent implements OnInit {
       token: [
         '',
         [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
-      ], // Campo para el token
+      ],
     });
-
-    // // Obtener el token al cargar el formulario usando el SDK
-    // this.sdkService.getToken().subscribe({
-    //   next: (token: string) => {
-    //     this.token = token;  // Almacenar el token
-    //     this.registerForm.get('token')?.setValue(this.token);  // Asignar el token al campo del formulario
-    //   },
-    //   error: (error) => {
-    //     console.error('Error obteniendo el token', error);
-    //   }
-    // });
+    this.requestSecurityToken();
   }
-
+  requestSecurityToken(): void {
+    this.securityService.getSecurityToken().subscribe(
+      (data: any) => {
+        this.registerForm.get('token')?.setValue(data.token);
+      },
+      (error) => {
+        console.error('Error al obtener el token de seguridad:', error);
+      }
+    );
+  }
   onSubmit() {
     if (this.registerForm.valid) {
-      const formData = this.registerForm.value;
-
-      // // Usar el SDK para registrar al cliente
-      // this.sdkService.registerClient(formData).subscribe({
-      //   next: (response) => {
-      //     console.log('Registro exitoso:', response);
-      //     this.registrationSuccess = true;  // Mostrar mensaje de éxito
-      //   },
-      //   error: (error) => {
-      //     console.error('Error al registrar el cliente:', error);
-      //   }
-      // });
+      const { token, ...newCustomer } = this.registerForm.value;
+      this.customerService.registerCustomer(newCustomer, token).subscribe(
+        (response) => {
+          this.toastr.success(response.message, 'Proceso correcto!');
+          this.registerForm.reset();
+          this.router.navigate(['/welcome']);
+        },
+        (error) => {
+          this.toastr.error(error.error.message, 'Hubo un error!');
+        }
+      );
     }
   }
 
-  // Método para comparar si las contraseñas coinciden
   get passwordsMatch(): boolean {
     return (
       this.registerForm.get('password')?.value ===
